@@ -1,0 +1,99 @@
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="login-card">
+                <div>
+                    <div>
+                        <a class="logo" routerLink='/'>
+                            <img class="img-fluid for-light" src="assets/images/logo/login.png" alt="looginpage">
+                            <img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt="looginpage">
+                        </a>
+                    </div>
+                    <div class="login-main">
+                        <form class="theme-form" [formGroup]="registerForm">
+                            <h4>Registra tu cuenta</h4>
+                            <p>Ingrese los datos personales de tu cuenta</p>
+                            <div class="form-group">
+                                <label class="col-form-label pt-0">Tu nombre</label>
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <input class="form-control" type="text" required="" placeholder="Nombres"
+                                            formControlName="firstName">
+                                    </div>
+                                    <div *ngIf="registerForm.controls.firstName.touched && registerForm.controls.firstName.errors?.required"
+                                        class="text text-danger mt-1">
+                                        Los nombres son obligatorios
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" type="text" required="" placeholder="Apellidos"
+                                            formControlName="lastName">
+                                    </div>
+                                    <div *ngIf="registerForm.controls.lastName.touched && registerForm.controls.lastName.errors?.required"
+                                        class="text text-danger mt-1">
+                                        Los apellidos son obligatorios
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Correo Electr&oacute;nico</label>
+                                <input class="form-control" type="email" required="" placeholder="app@tucorreo.com"
+                                    formControlName="email">
+                                <div *ngIf="registerForm.controls.email.touched && registerForm.controls.email.errors?.required"
+                                    class="text text-danger mt-1">
+                                    El correo es obligatorio
+                                </div>
+                                <div *ngIf="registerForm.controls.email.touched && registerForm.controls.email.errors?.email"
+                                    class="text text-danger mt-1">
+                                    Correo invalido
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Contrase&ntilde;a</label>
+                                <input class="form-control" [type]="show ? 'text' : 'password'"
+                                    name="register[password]" required="" placeholder="*********"
+                                    formControlName="password">
+                                <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span>
+                                </div>
+                                <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span>
+                                </div>
+                                <div *ngIf="registerForm.controls.password.touched && registerForm.controls.password.errors?.required"
+                                    class="text text-danger mt-1">
+                                    La contrase&ntilde;a es obligatoria
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="checkbox p-0" style="display: none;">
+                                    <input id="checkbox1" type="checkbox">
+                                    <label class="text-muted" for="checkbox1">Agree with<a class="ml-2"
+                                            routerLink='/'>Privacy Policy</a></label>
+                                </div>
+                                <button class="btn btn-primary btn-block" [class.loader--text]="showLoader"
+                                    [disabled]="!registerForm.valid || showLoader" (click)="localRegister()"
+                                    type="button">Registrarse</button>
+                            </div>
+                            <h6 class="text-muted mt-4 or" style="display: none;">Or signup with</h6>
+                            <div class="social mt-4" style="display: none;">
+                                <div class="btn-showcase">
+                                    <a class="btn btn-light" href="https://www.linkedin.com/login" target="_blank">
+                                        <app-feather-icons [icon]="'linkedin'" class="txt-linkedin"></app-feather-icons>
+                                        LinkedIn
+                                    </a>
+                                    <a class="btn btn-light" href="https://twitter.com/login?lang=en" target="_blank">
+                                        <app-feather-icons [icon]="'twitter'" class="txt-twitter"></app-feather-icons>
+                                        twitter
+                                    </a>
+                                    <a class="btn btn-light" href="https://www.facebook.com/" target="_blank">
+                                        <app-feather-icons [icon]="'facebook'" class="txt-fb"></app-feather-icons>
+                                        facebook
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="mt-4 mb-0">¿Ya tienes una cuenta?<a class="ml-2"
+                                    [routerLink]="'/auth/login/'">Inicia sesi&oacute;n</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

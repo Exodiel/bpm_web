@@ -3,60 +3,108 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng": {
+    "cuba": {
+      "projectType": "application",
+      
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "rxjs-compat",
+              "@ks89/angular-modal-gallery",
+              "mousetrap",
+              "hammerjs",
+              "firebase/app",
+              "dragula",
+              "knob",
+              "chartist",
+              "chartjs-plugin-streaming",
+              "@firebase/app",
+              "chart.js",
+              "dom-set",
+              "crossvent",
+              "contra/emitter",
+              "ev-emitter/ev-emitter",
+              "get-size/get-size",
+              "outlayer/outlayer",
+              "rxjs",
+              "ngx-masonry",
+              "@firebase/component",
+              "@firebase/firestore",
+              "@firebase/auth",
+              "@firebase/util",
+              "rxjs/operators",
+              "rxjs/Subject",
+              "rxjs/internal/operators",
+              "rxjs/internal/observable/of",
+              "rxjs/add/operator/map",
+              "rxjs/Subscription",
+              "masonry-layout",
+              "imagesloaded",
+              "rxjs-compat/add/operator/map",
+              "@mattlewis92/dom-autoscroller",
+              "dom-plane",
+              "@mattlewis92/dom-autoscroller",
+              "@tweenjs/tween.js",
+              "photoswipe",
+              "photoswipe/dist/photoswipe-ui-default",
+              "angular-calendar/date-adapters/date-fns",
+              "apexcharts",
+              "apexcharts/dist/apexcharts.min.js",
+              "calendar-utils/date-adapters/date-fns"
+            ],
+            "outputPath": "dist/cuba",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets/images/favicon.png",
               "src/assets"
             ],
             "styles": [
-              "node_modules/@coreui/icons/css/free.css",
-              "node_modules/flag-icon-css/css/flag-icon.css",
-              "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/simple-line-icons/dist/styles/simple-line-icons.css",
-              "src/scss/style.scss"
+              "node_modules/font-awesome/scss/font-awesome.scss",
+              "src/styles.scss"
             ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "./node_modules"
-              ]
-            },
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "chart.js",
-              "classnames"
-            ]
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
-              "budgets": [
+              "fileReplacements": [
                 {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [
+              "budgets": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "type": "initial",
+                  "maximumWarning": "9mb",
+                  "maximumError": "9mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "9mb",
+                  "maximumError": "9mb"
                 }
               ]
             }
@@ -65,96 +113,66 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng:build"
+            "browserTarget": "cuba:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng:build:production"
+              "browserTarget": "cuba:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng:build"
+            "browserTarget": "cuba:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
-            "styles": [
-              "node_modules/@coreui/icons/css/free.css",
-              "node_modules/flag-icon-css/css/flag-icon.css",
-              "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/simple-line-icons/dist/styles/simple-line-icons.css",
-              "src/scss/style.scss"
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "./node_modules"
-              ]
-            },
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/assets",
-              "src/favicon.ico"
-            ]
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
-        }
-      }
-    },
-    "ng-e2e": {
-      "root": "",
-      "sourceRoot": "",
-      "projectType": "application",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "ng:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "cuba:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cuba:serve:production"
+            }
           }
         }
       }
     }
   },
-  "defaultProject": "ng",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "style": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  },
+  "defaultProject": "cuba",
   "cli": {
     "analytics": false
   }

@@ -1,0 +1,28 @@
+<app-breadcrumb [title]="'Actualizar categor&iacute;a'" [items]="['Categorias']" [active_item]="'Actualizar categoria'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Datos de la categor&iacute;a</h5>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate [ngClass]="{'was-validated': validate}"
+                        [formGroup]="updateCategoryForm">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name">Nombre</label>
+                                <input class="form-control" id="name" name="name" type="text"
+                                    placeholder="Ingrese un nombre" required="" formControlName="name">
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary float-right" type="button" (click)=submit()><i
+                                class="fa fa-save"></i> Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

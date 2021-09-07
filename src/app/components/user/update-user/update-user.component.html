@@ -1,0 +1,74 @@
+<app-breadcrumb [title]="'Actualizar usuario'" [items]="['Usuarios']" [active_item]="'Editar usuario'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Datos del usuario</h5>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate [ngClass]="{'was-validated': validate}"
+                        [formGroup]="updateUserForm">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="identification">Identificaci&oacute;n</label>
+                                <input class="form-control" id="identification" type="text"
+                                    placeholder="Ingrese una identificacion (Cedula,Ruc)" minlength="10" maxlength="13"
+                                    required="" onlyNumbers formControlName="identification">
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="name">Nombres y Apellidos</label>
+                                <input class="form-control" id="name" type="text"
+                                    placeholder="Ingrese el nombre completo" required="" formControlName="name">
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email">Correo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                    </div>
+                                    <input class="form-control" id="email" type="email" placeholder="Ingrese un correo"
+                                        aria-describedby="inputGroupPrepend" required="" formControlName="email">
+
+                                    <div class="invalid-feedback">Por favor ingrese un correo v&aacute;lido</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="rol">Rol</label>
+
+                                <select class="form-control" id="rol" required="" formControlName="rol">
+                                    <option value="gerente">Gerente</option>
+                                    <option value="vendedor">Vendedor</option>
+                                    <option value="bodeguero">Bodeguero</option>
+                                    <option value="transportista">Transportista</option>
+                                </select>
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="col-md-6 mb-3">
+                                <label for="username">Nombre de usuario</label>
+                                <input class="form-control" id="username" type="text"
+                                    placeholder="Ingrese un nombre de usuario" required="" onlyAlphabets
+                                    formControlName="username">
+                                <div class="invalid-feedback">Por favor ingrese un nombre de usuario </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary float-right" type="button" (click)=submit()><i
+                                class="fa fa-save"></i> Guardar cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

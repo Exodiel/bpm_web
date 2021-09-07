@@ -1,0 +1,49 @@
+<app-breadcrumb [title]="'Productos'" [items]="['Productos']" [active_item]="'Listado'"></app-breadcrumb>
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Lista de productos</h5>
+                    <a class="btn btn-outline-info float-right" [routerLink]="['/products/create-product']"><i
+                            class="fa fa-plus"></i>
+                        Nuevo producto
+                    </a>
+                </div>
+                <div class="card-body custom-datatable">
+                    <ngx-datatable class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"
+                        [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements"
+                        [offset]="page.pageNumber" [limit]="page.size" (page)="setPage($event)">
+
+                        <!-- <ngx-datatable-column name="ID" prop="id" style="display: none;"></ngx-datatable-column> -->
+                        <ngx-datatable-column name="Producto" prop="name"></ngx-datatable-column>
+                        <ngx-datatable-column name="Costo" prop="cost"></ngx-datatable-column>
+                        <ngx-datatable-column name="Precio" prop="price"></ngx-datatable-column>
+                        <ngx-datatable-column name="Stock" prop="stock"></ngx-datatable-column>
+                        <ngx-datatable-column name="Imagen" prop="image">
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                <img [src]="row['image']" class="rounded img-fluid img-thumbnail" />
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Acciones" sortable="false" prop="id">
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                <a href="javascrip:void(0);" class="btn btn-light btn-xs btn-pill"
+                                    (click)="deleteProduct(row)">
+                                    <i class="fa fa-ban text-danger" style="font-size: 20px;"></i>
+                                </a>
+                                <a href="javascrip:void(0);" class="btn btn-light btn-xs btn-pill"
+                                    [routerLink]="['/products/update-product', row.id]">
+                                    <i class="fa fa-edit text-info" style="font-size: 20px;"></i>
+                                </a>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends -->
