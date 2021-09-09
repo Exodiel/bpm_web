@@ -1,30 +1,37 @@
 import { Routes } from '@angular/router';
+import { AdminGuard } from '../guard/admin.guard';
 
 
 export const content: Routes = [
   {
     path: 'users',
-    loadChildren: () => import('../../components/user/users.module').then(m => m.UsersModule)
+    loadChildren: () => import('../../components/user/users.module').then(m => m.UsersModule),
+    canActivate: [AdminGuard],
   },
   {
     path: 'categories',
-    loadChildren: () => import('../../components/category/category.module').then(m => m.CategoryModule)
+    loadChildren: () => import('../../components/category/category.module').then(m => m.CategoryModule),
+    canActivate: [AdminGuard],
   },
   {
     path: 'products',
-    loadChildren: () => import('../../components/product/product.module').then(m => m.ProductModule)
+    loadChildren: () => import('../../components/product/product.module').then(m => m.ProductModule),
+    canActivate: [AdminGuard],
   },
   {
     path: 'orders',
-    loadChildren: () => import('../../components/order/order.module').then(m => m.OrderModule)
+    loadChildren: () => import('../../components/order/order.module').then(m => m.OrderModule),
+    canActivate: [AdminGuard],
   },
   {
     path: 'clients',
-    loadChildren: () => import('../../components/client/client.module').then(m => m.ClientModule)
+    loadChildren: () => import('../../components/client/client.module').then(m => m.ClientModule),
+    canActivate: [AdminGuard],
   },
   {
     path: 'suppliers',
-    loadChildren: () => import('../../components/supplier/supplier.module').then(m => m.SupplierModule)
+    loadChildren: () => import('../../components/supplier/supplier.module').then(m => m.SupplierModule),
+    canActivate: [AdminGuard],
   },
   {
     path: 'dashboard',
@@ -53,10 +60,6 @@ export const content: Routes = [
   {
     path: 'to-do',
     loadChildren: () => import('../../components/apps/todo/todo.module').then(m => m.TodoModule),
-  },
-  {
-    path: 'to-do-firebase',
-    loadChildren: () => import('../../components/apps/to-do-firebase/to-do-firebase.module').then(m => m.ToDoFirebaseModule)
   },
   {
     path: 'editor',

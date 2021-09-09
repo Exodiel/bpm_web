@@ -3,7 +3,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { ExceptionResponse } from '../../shared/interfaces/exception-response';
 import { LoginResponse } from '../../shared/interfaces/login-response.interface';
-import { AuthService } from '../../shared/services/firebase/auth.service';
 import { AuthLocalService } from '../../shared/services/local/auth-local.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -26,7 +25,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginSubscription: Subscription;
 
   constructor(
-    public authService: AuthService,
     private fb: FormBuilder,
     public authLocalService: AuthLocalService,
     private cookieService: CookieService,
@@ -49,26 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   showPassword() {
     this.show = !this.show;
-  }
-  
-  // Login With Google
-  loginGoogle() {
-    this.authService.GoogleAuth();
-  }
-
-  // Login With Twitter
-  loginTwitter(): void {
-    this.authService.signInTwitter();
-  }
-
-  // Login With Facebook
-  loginFacebook() {
-    this.authService.signInFacebok();
-  }
-
-  // Simple Login
-  login() {
-    this.authService.SignIn(this.loginForm.value['email'], this.loginForm.value['password']);
   }
 
   localLogin() {

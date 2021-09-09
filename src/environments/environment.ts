@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: "http://192.168.0.103:5000/api/v1",
+  apiUrl: "http://192.168.88.225:8000/api/v1",
   firebase: {
     apiKey: "Your Api Key",
     authDomain: "Your Auth Domain",

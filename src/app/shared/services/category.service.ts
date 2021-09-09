@@ -40,6 +40,14 @@ export class CategoryService {
     });
   }
 
+  getCategoriesSimple(): Observable<CategoryResponse[]> {
+    return this.httpClient.get<CategoryResponse[]>(`${URL}/category/find`, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
+
   getCategoryById(id: number) : Observable<CategoryResponse> {
     return this.httpClient.get<CategoryResponse>(`${URL}/category/${id}`, {
       headers: {

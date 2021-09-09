@@ -39,7 +39,23 @@ export class ProductService {
     });
   }
 
-  deleteUserById(id: number) {
+  getProductById(id: number): Observable<ProductResponse> {
+    return this.httpClient.get<ProductResponse>(`${URL}/product/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
+
+  updateProduct(id: number, body: ProductDTO): Observable<ProductResponse> {
+    return this.httpClient.put<ProductResponse>(`${URL}/product/update/${id}`, { ...body }, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
+
+  deleteProductById(id: number) {
     return this.httpClient.delete(`${URL}/product/delete/${id}`, {
       headers: {
         'Authorization': `Bearer ${this.storageService.token}`

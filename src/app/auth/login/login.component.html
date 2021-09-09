@@ -50,19 +50,7 @@
                 </button>
               </div>
               <h6 style="display: none;" class="text-muted mt-4 or">Or Sign in with</h6>
-              <div class="social mt-4" style="display: none;">
-                <div class="btn-showcase">
-                  <a class="btn btn-light" (click)="loginFacebook()" target="_blank">
-                    <app-feather-icons [icon]="'facebook'" class="txt-fb"></app-feather-icons>Facebook
-                  </a>
-                  <a class="btn btn-light" (click)="loginTwitter()" target="_blank">
-                    <app-feather-icons [icon]="'twitter'" class="txt-twitter"></app-feather-icons>twitter
-                  </a>
-                  <a class="btn btn-light" (click)="loginGoogle()" target="_blank">
-                    <app-feather-icons [icon]="'log-in'" class="txt-google"></app-feather-icons>Google +
-                  </a>
-                </div>
-              </div>
+
               <p class="mt-4 mb-0">¿No tienes cuenta?
                 <a [routerLink]="'/auth/register'" class="ml-2">Registrar cuenta</a>
               </p>

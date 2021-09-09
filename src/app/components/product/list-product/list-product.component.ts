@@ -88,7 +88,7 @@ export class ListProductComponent implements OnInit {
           'El producto ha sido eliminado con exito.',
           'success'
         );
-        this.productService.deleteUserById(value.id).subscribe(
+        this.productService.deleteProductById(value.id).subscribe(
           (data) => {
 
             this.setPage({ offset: 0 }, true);

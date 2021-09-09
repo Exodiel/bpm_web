@@ -33,9 +33,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend">$</span>
                                     </div>
-                                    <input class="form-control" id="cost" type="text" placeholder="Ingrese un costo"
-                                        aria-describedby="inputGroupPrepend" onlyNumbers required=""
-                                        formControlName="cost">
+                                    <input class="form-control" id="cost" type="number" placeholder="Ingrese un costo"
+                                        aria-describedby="inputGroupPrepend" required="" formControlName="cost">
 
                                     <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
                                 </div>
@@ -46,9 +45,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend">$</span>
                                     </div>
-                                    <input class="form-control" id="price" type="text" placeholder="Ingrese un precio"
-                                        aria-describedby="inputGroupPrepend" onlyNumbers required=""
-                                        formControlName="price">
+                                    <input class="form-control" id="price" type="number" placeholder="Ingrese un precio"
+                                        aria-describedby="inputGroupPrepend" required="" formControlName="price">
 
                                     <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
                                 </div>
@@ -59,9 +57,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend">$</span>
                                     </div>
-                                    <input class="form-control" id="stock" type="text" placeholder="Ingrese un precio"
-                                        aria-describedby="inputGroupPrepend" onlyNumbers required=""
-                                        formControlName="stock">
+                                    <input class="form-control" id="stock" type="number" placeholder="Ingrese un precio"
+                                        aria-describedby="inputGroupPrepend" required="" formControlName="stock">
 
                                     <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
                                 </div>
@@ -72,7 +69,7 @@
 
                             <div class="col-md-6 mb-3">
                                 <label for="image">Imagen</label>
-                                <input class="form-control" id="image" type="file"
+                                <input class="form-control" id="image" type="file" (change)="onChange($event)"
                                     placeholder="Ingrese un nombre de usuario" required="" formControlName="image">
                                 <div class="invalid-feedback">Por favor ingrese un formato valido </div>
                             </div>
@@ -80,7 +77,9 @@
                                 <label for="categoryId">Categor&iacute;a</label>
                                 <select class="form-control" id="categoryId" formControlName="categoryId">
                                     <option value="">-- Seleccione --</option>
-                                    <option value="1">CEREALES</option>
+                                    <option *ngFor="let category of categories" value="{{category.id}}">
+                                        {{category.name}}
+                                    </option>
                                 </select>
                                 <!-- <div class="invalid-feedback">Por favor ingrese una contrase&ntilde;a</div> -->
                             </div>

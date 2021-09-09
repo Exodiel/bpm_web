@@ -17,15 +17,9 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 // for Core import:
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 
-import { AuthService } from './shared/services/firebase/auth.service';
 import { AdminGuard } from './shared/guard/admin.guard';
 import { SecureInnerPagesGuard } from './shared/guard/SecureInnerPagesGuard.guard';
 import { CookieService } from 'ngx-cookie-service';
-import { AngularFireModule } from "@angular/fire";
-import { AngularFireAuthModule } from "@angular/fire/auth";
-
-import { environment } from '../environments/environment';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -54,9 +48,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     NgbModule,
     ToastrModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -70,11 +61,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingBarRouterModule,
     // for Core use:
     LoadingBarModule,
-
     UsersModule,
     CategoryModule
   ],
-  providers: [AuthService, AdminGuard, SecureInnerPagesGuard, CookieService],
+  providers: [
+    AdminGuard,
+    SecureInnerPagesGuard,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

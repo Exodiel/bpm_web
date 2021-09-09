@@ -1,1 +1,95 @@
-<p>update-product works!</p>
+<app-breadcrumb [title]="'Actualizar producto'" [items]="['Productos']" [active_item]="'Actualizar producto'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Datos del producto</h5>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate [ngClass]="{'was-validated': validate}"
+                        [formGroup]="updateProductForm">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name">Nombre</label>
+                                <input class="form-control" id="name" type="text" placeholder="Ingrese un nombre"
+                                    required="" formControlName="name">
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="description">Descripci&oacute;n</label>
+                                <input class="form-control" id="description" type="text"
+                                    placeholder="Ingrese una descripcion" required="" formControlName="description">
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="cost">Costo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">$</span>
+                                    </div>
+                                    <input class="form-control" id="cost" type="number" placeholder="Ingrese un costo"
+                                        aria-describedby="inputGroupPrepend" required="" formControlName="cost">
+
+                                    <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="price">Precio</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">$</span>
+                                    </div>
+                                    <input class="form-control" id="price" type="number" placeholder="Ingrese un precio"
+                                        aria-describedby="inputGroupPrepend" required="" formControlName="price">
+
+                                    <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="stock">Stock</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">$</span>
+                                    </div>
+                                    <input class="form-control" id="stock" type="number" placeholder="Ingrese un precio"
+                                        aria-describedby="inputGroupPrepend" required="" formControlName="stock">
+
+                                    <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="col-md-6 mb-3">
+                                <label for="image">Imagen</label>
+                                <input class="form-control" id="image" type="file" (change)="onChange($event)"
+                                    placeholder="Ingrese un nombre de usuario" required="" formControlName="image">
+                                <div class="invalid-feedback">Por favor ingrese un formato valido </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="categoryId">Categor&iacute;a</label>
+                                <select class="form-control" id="categoryId" formControlName="categoryId">
+                                    <option value="">-- Seleccione --</option>
+                                    <option *ngFor="let category of categories" value="{{category.id}}">
+                                        {{category.name}}
+                                    </option>
+                                </select>
+                                <!-- <div class="invalid-feedback">Por favor ingrese una contrase&ntilde;a</div> -->
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary float-right" type="button" (click)=submit()><i
+                                class="fa fa-save"></i> Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
