@@ -1,28 +1,21 @@
 <div class="notification-box" (click)="toggleNotificationMobile()">
   <app-feather-icons [icon]="'bell'"></app-feather-icons>
-  <span class="badge badge-pill badge-secondary">4</span>
+  <span class="badge badge-pill badge-secondary">{{total}}</span>
 </div>
 <ul class="notification-dropdown onhover-show-div" [class.active]="openNotification">
   <li>
     <app-feather-icons [icon]="'bell'"></app-feather-icons>
     <h6 class="f-18 mb-0">Notiticaciones</h6>
   </li>
-  <li>
+  <li *ngFor="let notification of notifications">
     <p>
-      <i class="fa fa-circle-o mr-3 font-primary"></i>Recorrido procesando <span class="pull-right">3 hr</span>
+      <i
+        class="fa fa-circle-o mr-3 {{notification.topic == 'created' ? 'font-primary' : notification.topic == 'inventoried' ? 'font-info' : notification.topic == 'processing' ? 'font-warning': notification.topic == 'complete' ? 'font-success' : 'font-danger'}}"></i>
+      {{notification.title}} <span class="pull-right">{{formatBody(notification.body)}}</span>
     </p>
   </li>
   <li>
-    <p>
-      <i class="fa fa-circle-o mr-3 font-success"></i>Orden Completada<span class="pull-right">2 hr</span>
-    </p>
-  </li>
-  <li>
-    <p>
-      <i class="fa fa-circle-o mr-3 font-danger"></i>Recorrido Completado<span class="pull-right">2 hr</span>
-    </p>
-  </li>
-  <li>
-    <a class="btn btn-primary" href="#">Ver todas las notificaciones</a>
+    <a class="btn btn-primary" href="javascript:void(0);" [routerLink]="['/notifications/list-notification']">Ver
+      notificaciones</a>
   </li>
 </ul>

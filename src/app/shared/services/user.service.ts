@@ -66,6 +66,14 @@ export class UserService {
     });
   }
 
+  getUserByType(type: string): Observable<UserResponse[]> {
+    return this.httpClient.get<UserResponse[]>(`${URL}/user/search?type=${type}`, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
+
   updateUser(data: UserUpdateDTO): Observable<UserResponse> {
     return this.httpClient.put<UserResponse>(`${URL}/user/update/${data.id}`, {
       ...data

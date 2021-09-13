@@ -18,8 +18,12 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 import { AdminGuard } from './shared/guard/admin.guard';
+import { DispatcherGuard } from './shared/guard/dispatcher.guard';
+import { SellerGuard } from './shared/guard/seller.guard';
+import { StorekeeperGuard } from './shared/guard/storekeeper.guard';
 import { SecureInnerPagesGuard } from './shared/guard/SecureInnerPagesGuard.guard';
 import { CookieService } from 'ngx-cookie-service';
+import { SocketService } from './shared/services/socket.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -66,8 +70,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     AdminGuard,
+    DispatcherGuard,
+    SellerGuard,
+    StorekeeperGuard,
     SecureInnerPagesGuard,
-    CookieService
+    CookieService,
+    SocketService
   ],
   bootstrap: [AppComponent]
 })

@@ -25,12 +25,12 @@
 
                         <ngx-datatable-column name="Acciones" sortable="false" prop="id">
                             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                                <a href="javascrip:void(0);" class="btn btn-light btn-xs btn-pill"
+                                <a href="javascript:void(0);" class="btn btn-light btn-xs btn-pill"
                                     (click)="deleteTransaction(row)">
                                     <i class="fa fa-ban text-danger" style="font-size: 20px;"></i>
                                 </a>
-                                <a href="javascrip:void(0);" class="btn btn-light btn-xs btn-pill"
-                                    [routerLink]="['/orders/update-order', row.id]">
+                                <a href="javascript:void(0);" class="btn btn-light btn-xs btn-pill"
+                                    (click)="editProduct(row)">
                                     <i class="fa fa-edit text-info" style="font-size: 20px;"></i>
                                 </a>
                             </ng-template>

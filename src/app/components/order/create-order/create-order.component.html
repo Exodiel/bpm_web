@@ -1,1 +1,164 @@
-<p>create-order works!</p>
+<app-breadcrumb [title]="'Registrar nueva transacci&oacute;n'" [items]="['Transacci&oacute;n']"
+    [active_item]="'Nueva transacci&oacute;n'">
+</app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Datos de la transacci&oacute;n</h5>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate [ngClass]="{'was-validated': validate}"
+                        [formGroup]="createOrderForm">
+
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="date">Fecha Emisi&oacute;n</label>
+                                <input class="form-control" id="date" type="date" required="" formControlName="date">
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="payment">M&eacute;todo de pago</label>
+                                <select class="form-control" id="payment" formControlName="payment">
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="EFECTIVO">EFECTIVO</option>
+                                    <option value="CHEQUE">CHEQUE</option>
+                                    <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                </select>
+
+                                <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="col-md-6 mb-3">
+                                <label for="tipo">Tipo</label>
+                                <select class="form-control" id="tipo" formControlName="tipo"
+                                    (change)="onChangeType($event)">
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="Venta">Venta</option>
+                                    <option value="Compra">Compra</option>
+                                </select>
+                                <div class="valid-feedback">¡Correcto!</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="personId">Persona</label>
+                                <select class="form-control" id="personId" formControlName="personId">
+                                    <option value="" selected="selected">-- Seleccione --</option>
+                                    <option *ngFor="let person of people" value="{{person.id}}">
+                                        {{person.identification}} -- {{person.name}}
+                                    </option>
+                                </select>
+                                <!-- <div class="invalid-feedback">Por favor ingrese una contrase&ntilde;a</div> -->
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <label for="address">Url Google Maps</label>
+                                <input class="form-control" id="address" type="text"
+                                    placeholder="Ingrese la url de la ubicacion" aria-describedby="inputGroupPrepend"
+                                    required="" formControlName="address">
+
+                                <div class="invalid-feedback">Por favor ingrese un formato v&aacute;lido</div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="description">Descripci&oacute;n</label>
+                                <textarea class="form-control" rows="4" cols="10" id="description" required=""
+                                    formControlName="description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <h3>Detalles</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <ng-select placeholder="Seleccione el producto..." (change)="selectChange($event)"
+                                    class="js-example-placeholder-multiple" [closeOnSelect]="true"
+                                    [(ngModel)]="selectedProduct">
+                                    <ng-option *ngFor="let product of productData" [value]="product.id">
+                                        {{product.name}}; STOCK:{{product.stock}}</ng-option>
+                                </ng-select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="col-md-12 mb-3">
+                                <table id="detail" class="table table-striped">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Desc. %</th>
+                                        <th>Desc.</th>
+                                        <th>Subtotal</th>
+                                    </thead>
+                                    <tbody formArrayName="details">
+                                        <tr *ngFor="let detail of details; let i = index" [formGroupName]="i">
+                                            <td><button class="btn btn-xs" (click)="deleteItem(i)"><i
+                                                        class="fa fa-trash text-danger"
+                                                        style="font-size: 14px;"></i></button></td>
+                                            <td><input class="form-control" readonly formControlName="product" /></td>
+                                            <td>
+                                                <input class="form-control" formControlName="quantity" />
+                                                <input type="hidden" formControlName="stock" />
+                                            </td>
+                                            <td><input class="form-control" readonly formControlName="price" /></td>
+                                            <td><input class="form-control" formControlName="discount" /></td>
+                                            <td><input class="form-control" readonly formControlName="discountvalue" />
+                                            </td>
+                                            <td><input class="form-control" readonly formControlName="subtotal" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="col-md-3 mb-3">
+                                <label for="subtotal">Subtotal</label>
+                                <input type="text" readonly id="subtotal" class="form-control"
+                                    formControlName="subtotal" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="discount">Descuento</label>
+                                <input type="text" readonly id="discount" class="form-control"
+                                    formControlName="discount" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="tax">Impuesto</label>
+                                <input type="text" readonly id="tax" class="form-control" formControlName="tax" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="total">Total</label>
+                                <input type="text" readonly id="total" class="form-control" formControlName="total" />
+                            </div>
+                        </div>
+
+
+                        <button class="btn btn-primary float-right" type="button" (click)=submit()><i
+                                class="fa fa-save"></i> Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

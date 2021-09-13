@@ -1,0 +1,34 @@
+<app-breadcrumb [title]="'Notificaciones'" [items]="['Notificaciones']" [active_item]="'Listado'"></app-breadcrumb>
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Lista de notificaciones</h5>
+                </div>
+                <div class="card-body custom-datatable">
+                    <ngx-datatable class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"
+                        [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements"
+                        [offset]="page.pageNumber" [limit]="page.size" (page)="setPage($event)">
+
+                        <ngx-datatable-column name="Descripcion" prop="title"></ngx-datatable-column>
+                        <ngx-datatable-column name="Estado" prop="topic"></ngx-datatable-column>
+                        <ngx-datatable-column name="Fecha de creacion" prop="body"></ngx-datatable-column>
+
+                        <ngx-datatable-column name="Acciones" sortable="false" prop="id">
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                <a href="javascript:void(0);" class="btn btn-light btn-xs btn-pill"
+                                    (click)="deleteNotification(row)">
+                                    <i class="fa fa-ban text-danger" style="font-size: 20px;"></i>
+                                </a>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends -->

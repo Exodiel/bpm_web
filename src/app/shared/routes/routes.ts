@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 import { AdminGuard } from '../guard/admin.guard';
+import { SellerGuard } from '../guard/seller.guard';
+import { StorekeeperGuard } from '../guard/storekeeper.guard';
+import { DispatcherGuard } from '../guard/dispatcher.guard';
 
 
 export const content: Routes = [
@@ -11,31 +14,42 @@ export const content: Routes = [
   {
     path: 'categories',
     loadChildren: () => import('../../components/category/category.module').then(m => m.CategoryModule),
-    canActivate: [AdminGuard],
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard],
   },
   {
     path: 'products',
     loadChildren: () => import('../../components/product/product.module').then(m => m.ProductModule),
-    canActivate: [AdminGuard],
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard],
   },
   {
     path: 'orders',
     loadChildren: () => import('../../components/order/order.module').then(m => m.OrderModule),
-    canActivate: [AdminGuard],
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
   },
   {
     path: 'clients',
     loadChildren: () => import('../../components/client/client.module').then(m => m.ClientModule),
-    canActivate: [AdminGuard],
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
   },
   {
     path: 'suppliers',
     loadChildren: () => import('../../components/supplier/supplier.module').then(m => m.SupplierModule),
-    canActivate: [AdminGuard],
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => import('../../components/notification/notification.module').then(m => m.NotificationModule),
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('../../components/reports/reports.module').then(m => m.ReportsModule),
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('../../components/dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('../../components/dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
   },
   {
     path: 'widgets',

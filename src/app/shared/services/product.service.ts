@@ -38,6 +38,13 @@ export class ProductService {
       }
     });
   }
+  getProductsSimple(): Observable<ProductResponse[]> {
+    return this.httpClient.get<ProductResponse[]>(`${URL}/product/find`, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
 
   getProductById(id: number): Observable<ProductResponse> {
     return this.httpClient.get<ProductResponse>(`${URL}/product/${id}`, {

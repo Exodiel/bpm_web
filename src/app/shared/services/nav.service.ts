@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Subject, BehaviorSubject, fromEvent } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { StorageService } from './storage.service';
 
 // Menu
 export interface Menu {
@@ -25,14 +26,14 @@ export interface Menu {
 export class NavService implements OnDestroy {
 
 	private unsubscriber: Subject<any> = new Subject();
-	public  screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
+	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
 
 	// Search Box
 	public search: boolean = false;
 
 	// Language
 	public language: boolean = false;
-	
+
 	// Mega Menu
 	public megaMenu: boolean = false;
 	public levelMenu: boolean = false;
@@ -47,7 +48,7 @@ export class NavService implements OnDestroy {
 	// Full screen
 	public fullScreen: boolean = false;
 
-	constructor(private router: Router) {
+	constructor(private router: Router, private storageService: StorageService) {
 		this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
@@ -59,12 +60,12 @@ export class NavService implements OnDestroy {
 				this.megaMenu = false;
 				this.levelMenu = false;
 			}
-			if(evt.target.innerWidth < 1199) {
+			if (evt.target.innerWidth < 1199) {
 				this.megaMenuColapse = true;
 			}
 		});
-		if(window.innerWidth < 991) { // Detect Route change sidebar close
-			this.router.events.subscribe(event => { 
+		if (window.innerWidth < 991) { // Detect Route change sidebar close
+			this.router.events.subscribe(event => {
 				this.collapseSidebar = true;
 				this.megaMenu = false;
 				this.levelMenu = false;
@@ -81,53 +82,206 @@ export class NavService implements OnDestroy {
 		this.screenWidth.next(width);
 	}
 
-	MENUITEMS: Menu[] = [
-		{
-			title: 'Inicio',
-			type: 'link',
-			icon: 'home',
-			active: true,
-			path: '/dashboard/default'
-		},
-		{
-			title: 'Transacciones',
-			icon: 'box',
-			type: 'sub',
-			active: false,
-			children: [
-				{ path: '/orders/list-order', title: 'Venta/Compra', type: 'link' },
+	private buildMenu() {
+		if (this.storageService.rol === 'admin') {
+			return [
 				{
-					title: 'Personas',
+					title: 'Inicio',
+					type: 'link',
+					icon: 'home',
+					active: true,
+					path: '/dashboard/default'
+				},
+				{
+					title: 'Transacciones',
+					icon: 'shopping-bag',
 					type: 'sub',
+					active: false,
 					children: [
-						{ path: '/clients/list-client', title: 'Clientes', type: 'link' },
-						{ path: '/suppliers/list-supplier', title: 'Proveedores', type: 'link' },
+						{ path: '/orders/list-orders', title: 'Transaccion', type: 'link' },
+						{
+							title: 'Personas',
+							type: 'sub',
+							children: [
+								{ path: '/clients/list-client', title: 'Clientes', type: 'link' },
+								{ path: '/suppliers/list-supplier', title: 'Proveedores', type: 'link' },
+							]
+						},
 					]
 				},
-			]
-		},
-		{
-			title: 'Inventario',
-			icon: 'box',
-			type: 'sub',
-			active: false,
-			children: [
-				{ path: '/products/list-product', title: 'Productos', type: 'link' },
-				{ path: '/categories/list-category', title: 'Categorias', type: 'link' },
-			]
-		},
-		{
-			title: 'Usuarios',
-			icon: 'users',
-			type: 'sub',
-			active: false,
-			children: [
-				{ path: '/users/list-user', title: 'Usuarios', type: 'link' },
-				{ path: '/users/create-user', title: 'Nuevo usuario', type: 'link' },
-			]
-		},
-		
-	];
+				{
+					title: 'Inventario',
+					icon: 'package',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/products/list-product', title: 'Productos', type: 'link' },
+						{ path: '/categories/list-category', title: 'Categorias', type: 'link' },
+					]
+				},
+				{
+					title: 'Usuarios',
+					icon: 'users',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/users/list-user', title: 'Usuarios', type: 'link' },
+						{ path: '/users/create-user', title: 'Nuevo usuario', type: 'link' },
+					]
+				},
+				{
+					title: 'Reportes',
+					icon: 'clipboard',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
+						{ path: '/reports/people', title: 'Personas', type: 'link' },
+						{ path: '/reports/products', title: 'Productos', type: 'link' },
+						{ path: '/reports/users', title: 'Usuarios', type: 'link' },
+					]
+				},
+			];
+		}
+		if (this.storageService.rol === 'vendedor') {
+			return [
+				{
+					title: 'Inicio',
+					type: 'link',
+					icon: 'home',
+					active: true,
+					path: '/dashboard/default'
+				},
+				{
+					title: 'Transacciones',
+					icon: 'shopping-bag',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/orders/list-order', title: 'Transaccion', type: 'link' },
+						{
+							title: 'Personas',
+							type: 'sub',
+							children: [
+								{ path: '/clients/list-client', title: 'Clientes', type: 'link' },
+								{ path: '/suppliers/list-supplier', title: 'Proveedores', type: 'link' },
+							]
+						},
+					]
+				},
+				{
+					title: 'Inventario',
+					icon: 'package',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/products/list-product', title: 'Productos', type: 'link' },
+						{ path: '/categories/list-category', title: 'Categorias', type: 'link' },
+					]
+				},
+				{
+					title: 'Reportes',
+					icon: 'clipboard',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
+						{ path: '/reports/people', title: 'Personas', type: 'link' },
+						{ path: '/reports/products', title: 'Productos', type: 'link' },
+					]
+				},
+			];
+		}
+		if (this.storageService.rol === 'bodeguero') {
+			return [
+				{
+					title: 'Inicio',
+					type: 'link',
+					icon: 'home',
+					active: true,
+					path: '/dashboard/default'
+				},
+				{
+					title: 'Transacciones',
+					icon: 'shopping-bag',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/orders/list-order', title: 'Transaccion', type: 'link' },
+						{
+							title: 'Personas',
+							type: 'sub',
+							children: [
+								{ path: '/clients/list-client', title: 'Clientes', type: 'link' },
+								{ path: '/suppliers/list-supplier', title: 'Proveedores', type: 'link' },
+							]
+						},
+					]
+				},
+				{
+					title: 'Inventario',
+					icon: 'package',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/products/list-product', title: 'Productos', type: 'link' },
+						{ path: '/categories/list-category', title: 'Categorias', type: 'link' },
+					]
+				},
+				{
+					title: 'Reportes',
+					icon: 'clipboard',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
+						{ path: '/reports/people', title: 'Personas', type: 'link' },
+						{ path: '/reports/products', title: 'Productos', type: 'link' },
+					]
+				},
+			];
+		}
+		if (this.storageService.rol === 'transportista') {
+			return [
+				{
+					title: 'Inicio',
+					type: 'link',
+					icon: 'home',
+					active: true,
+					path: '/dashboard/default'
+				},
+				{
+					title: 'Transacciones',
+					icon: 'shopping-bag',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/orders/list-order', title: 'Transaccion', type: 'link' },
+						{
+							title: 'Personas',
+							type: 'sub',
+							children: [
+								{ path: '/clients/list-client', title: 'Clientes', type: 'link' },
+								{ path: '/suppliers/list-supplier', title: 'Proveedores', type: 'link' },
+							]
+						},
+					]
+				},
+				{
+					title: 'Reportes',
+					icon: 'clipboard',
+					type: 'sub',
+					active: false,
+					children: [
+						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
+						{ path: '/reports/products', title: 'Productos', type: 'link' },
+					]
+				},
+			];
+		}
+	}
+
+	MENUITEMS: Menu[] = this.buildMenu();
 
 	MEGAMENUITEMS: Menu[] = [
 		{

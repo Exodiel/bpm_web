@@ -42,6 +42,7 @@ export class AuthLocalService {
     localStorage.clear();
     this.cookieService.deleteAll('user', '/auth/login');
     this.router.navigate(['/auth/login']);
+    location.reload();
   }
 
   get isLoggedIn(): boolean {

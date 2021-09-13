@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { OrderRoutingModule } from './order-routing.module';
 import { ListOrderComponent } from './list-order/list-order.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
@@ -22,7 +23,8 @@ import { UpdateOrderComponent } from './update-order/update-order.component';
     SharedModule,
     NgxDatatableModule,
     SweetAlert2Module,
-    OrderRoutingModule
+    OrderRoutingModule,
+    NgSelectModule
   ],
   exports: [
     ListOrderComponent,
