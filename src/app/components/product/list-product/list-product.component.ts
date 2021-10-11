@@ -8,6 +8,7 @@ import { ProductService } from '../../../shared/services/product.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { ReportsExcelService } from '../../../shared/services/reports-excel.service';
 declare var require
 const Swal = require('sweetalert2')
 
@@ -23,6 +24,7 @@ export class ListProductComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     public toster: ToastrService,
+    private reportsService: ReportsExcelService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -105,4 +107,26 @@ export class ListProductComponent implements OnInit {
     this.router.navigate(['update-product/:id', value.id]);
   }
 
+  generateExcel() {
+
+    this.productService.getProductsSimple().subscribe(
+      (response) => {
+        this.reportsService.downloadProductsExcel(response);
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
+  }
+
+  generatePdf() {
+    this.productService.getProductsSimple().subscribe(
+      (response) => {
+        this.reportsService.downloadProductsPdf(response);
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
+  }
 }

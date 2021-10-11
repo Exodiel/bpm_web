@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Page } from '../../../shared/model/page.model';
 import { CategoryMapped } from '../../../shared/model/category-mapped';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../shared/services/category.service';
 import { PagedData } from '../../../shared/model/page-data';
@@ -10,6 +9,7 @@ import { Pagination } from '../../../shared/interfaces/pagination.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryResponse } from '../../../shared/interfaces/category/category-response';
 import { FormGroup } from '@angular/forms';
+import { ReportsExcelService } from '../../../shared/services/reports-excel.service';
 
 declare var require
 const Swal = require('sweetalert2');
@@ -29,6 +29,7 @@ export class ListCategoryComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     public toster: ToastrService,
+    private reportService: ReportsExcelService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -60,8 +61,8 @@ export class ListCategoryComponent implements OnInit {
     const end = Math.min(start + page.size, page.totalElements);
     for (let i = 0; i < data.length; i++) {
       const jsonObj = data[i];
-      const user = new CategoryMapped(jsonObj.id, jsonObj.name);
-      pagedData.data.push(user);
+      const categoryMapped = new CategoryMapped(jsonObj.id, jsonObj.name, jsonObj.image);
+      pagedData.data.push(categoryMapped);
     }
     pagedData.page = page;
     return pagedData;
@@ -97,4 +98,25 @@ export class ListCategoryComponent implements OnInit {
     })
   }
 
+  generateExcel() {
+    this.categoryService.findCategories().subscribe(
+      (response) => {
+        this.reportService.downloadCategoriesExcel(response);
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
+  }
+
+  generatePdf() {
+    this.categoryService.findCategories().subscribe(
+      (response) => {
+        this.reportService.downloadCategoriesPdf(response);
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
+  }
 }

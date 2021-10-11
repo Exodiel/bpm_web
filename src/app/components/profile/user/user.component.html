@@ -1,0 +1,78 @@
+<app-breadcrumb [title]="'Perfil'" [items]="['Usuario']" [active_item]="'Perfil'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="user-image">
+        <div class="avatar">
+          <img class="rounded img-thumbnail"  src="{{user.image}}" alt="" >
+          <div class="icon-wrapper marl text-white " style="cursor: pointer;">
+            <i class="icofont icofont-pencil-alt-5 " style="margin-left: 2px">
+              <input type="file" class="upload" id="image" (change)="onChange($event)">
+            </i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h4>Informaci&oacute;n del usuario</h4>
+        </div>
+        <div class="card-body">
+          <form class="needs-validation" novalidate [ngClass]="{'was-validated': validate}" [formGroup]="userForm">
+            <div class="form-row">
+              <div class="col-md-12 mb-3">
+                <label for="identification">Identificaci&oacute;n</label>
+                <input class="form-control" id="identification" type="text"
+                  placeholder="Ingrese una identificacion (Cedula,Ruc)" minlength="10" maxlength="13" required=""
+                  onlyNumbers formControlName="identification">
+                <div class="valid-feedback">¡Correcto!</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12 mb-3">
+                <label for="name">Nombre</label>
+                <input class="form-control" id="name" type="text"
+                  placeholder="Ingrese el nombre" required=""
+                  onlyNumbers formControlName="name">
+                <div class="valid-feedback">¡Correcto!</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12 mb-3">
+                <label for="email">Correo</label>
+                <input class="form-control" id="email" type="text"
+                  placeholder="Ingrese el correo" required=""
+                  onlyNumbers formControlName="email">
+                <div class="valid-feedback">¡Correcto!</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12 mb-3">
+                <label for="phone">Tel&eacute;fono</label>
+                <input class="form-control" id="phone" type="text"
+                  placeholder="Ingrese un telefono" required=""
+                  onlyNumbers formControlName="phone">
+                <div class="valid-feedback">¡Correcto!</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12 mb-3">
+                <label for="address">Direcci&oacute;n</label>
+                <input class="form-control" id="address" type="text"
+                  placeholder="Ingrese una direccion" required=""
+                  formControlName="address">
+                <div class="valid-feedback">¡Correcto!</div>
+              </div>
+            </div>
+            <button class="btn btn-primary float-right" type="button" (click)=submit()><i
+              class="fa fa-save"></i> Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -4,20 +4,22 @@ import { CommonModule } from '@angular/common';
 import { ReportsRoutingModule } from './reports-routing.module';
 import { OrdersComponent } from './orders/orders.component';
 import { ProductsComponent } from './products/products.component';
-import { UsersComponent } from './users/users.component';
-import { PeopleComponent } from './people/people.component';
+
+import { SharedModule } from '../../shared/shared.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
   declarations: [
     OrdersComponent,
     ProductsComponent,
-    UsersComponent,
-    PeopleComponent
   ],
   imports: [
     CommonModule,
-    ReportsRoutingModule
+    ReportsRoutingModule,
+    CommonModule,
+    SharedModule,
+    NgxDatatableModule,
   ]
 })
 export class ReportsModule { }

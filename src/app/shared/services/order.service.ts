@@ -7,6 +7,7 @@ import { ListResponse } from '../interfaces/list-response';
 import { OrderResponse } from '../interfaces/order/order-response';
 import { OrderDTO } from '../interfaces/order/order.dto';
 import { DetailDTO } from '../interfaces/detail/detail.dto';
+import { OrderReportDto } from '../interfaces/reports/order-report.dto';
 
 const URL = environment.apiUrl;
 
@@ -16,8 +17,8 @@ const URL = environment.apiUrl;
 export class OrderService {
 
   constructor(
-    public httpClient: HttpClient,
-    public storageService: StorageService
+    private httpClient: HttpClient,
+    private storageService: StorageService
   ) { }
 
   getOrders(limit: number, offset: number): Observable<ListResponse<OrderResponse>> {
@@ -66,6 +67,22 @@ export class OrderService {
 
   updateOrder(id: number, data: OrderDTO): Observable<OrderResponse> {
     return this.httpClient.put<OrderResponse>(`${URL}/order/update/${id}`, {...data}, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
+
+  reportOrder(data: OrderReportDto): Observable<Array<OrderResponse>> {
+    return this.httpClient.post<Array<OrderResponse>>(`${URL}/order/get-transactions`, {...data}, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
+
+  findOrders(): Observable<Array<OrderResponse>> {
+    return this.httpClient.get<Array<OrderResponse>>(`${URL}/order/find`, {
       headers: {
         'Authorization': `Bearer ${this.storageService.token}`
       }

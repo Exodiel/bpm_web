@@ -9,6 +9,7 @@ import { Pagination } from '../../../shared/interfaces/pagination.interface';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { ReportsExcelService } from '../../../shared/services/reports-excel.service';
 declare var require
 const Swal = require('sweetalert2')
 
@@ -25,6 +26,7 @@ export class ListUserComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     public toster: ToastrService,
+    private reportService: ReportsExcelService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -107,5 +109,27 @@ export class ListUserComponent implements OnInit {
 
   editUser(value: UserMapped) {
     this.router.navigate(['update-user/:id', value.id]);
+  }
+
+  generateExcel() {
+    this.userService.getUserByType('user').subscribe(
+      (response) => {
+        this.reportService.downloadUsersExcel(response);
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
+  }
+
+  generatePdf() {
+    this.userService.getUserByType('user').subscribe(
+      (response) => {
+        this.reportService.downloadUsersPdf(response);
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
   }
 }

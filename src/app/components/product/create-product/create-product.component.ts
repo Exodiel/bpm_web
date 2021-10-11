@@ -11,6 +11,9 @@ import { ProductService } from '../../../shared/services/product.service';
 import { CategoryService } from '../../../shared/services/category.service';
 import { CategoryResponse } from '../../../shared/interfaces/category/category-response';
 import { UploadsService } from '../../../shared/services/uploads.service';
+import { environment } from '../../../../environments/environment';
+
+const URL = environment.wsUrl;
 
 @Component({
   selector: 'app-create-product',
@@ -55,7 +58,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   onChange(event) {
-    this.file = event.target.files[0];
+    this.file = (event.target as HTMLInputElement).files[0];
   }
 
   public submit() {
@@ -70,7 +73,7 @@ export class CreateProductComponent implements OnInit {
             price: this.createProductForm.value['price'],
             stock: this.createProductForm.value['stock'],
             categoryId: +this.createProductForm.value['categoryId'],
-            image: 'http://localhost:5000/' + data.filepath,
+            image: `${URL}/` + data.filepath,
           };
 
           this.createProductObserver$ = this.productService.createProduct(body);

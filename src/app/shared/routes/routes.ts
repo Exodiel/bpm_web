@@ -24,7 +24,7 @@ export const content: Routes = [
   {
     path: 'orders',
     loadChildren: () => import('../../components/order/order.module').then(m => m.OrderModule),
-    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
+    canActivate: [AdminGuard],
   },
   {
     path: 'clients',
@@ -49,6 +49,11 @@ export const content: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('../../components/dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('../../components/profile/profile.module').then(m => m.ProfileModule),
     canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
   },
   {

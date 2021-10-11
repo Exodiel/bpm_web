@@ -17,6 +17,12 @@
                                     required="" onlyAlphabets formControlName="name">
                                 <div class="valid-feedback">¡Correcto!</div>
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="image">Imagen</label>
+                                <input class="form-control" id="image" type="file" (change)="onChange($event)"
+                                    placeholder="Ingrese un nombre de usuario" required="" formControlName="image">
+                                <div class="invalid-feedback">Por favor ingrese un formato valido </div>
+                            </div>
                         </div>
                         <button class="btn btn-primary float-right" type="button" (click)=submit()><i
                                 class="fa fa-save"></i> Guardar</button>

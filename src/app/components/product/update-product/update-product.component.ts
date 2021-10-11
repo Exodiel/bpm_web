@@ -10,6 +10,9 @@ import { UploadsService } from '../../../shared/services/uploads.service';
 import { ProductResponse } from '../../../shared/interfaces/product/product-response';
 import { CategoryResponse } from '../../../shared/interfaces/category/category-response';
 import { ProductDTO } from '../../../shared/interfaces/product/product.dto';
+import { environment } from '../../../../environments/environment';
+
+const URL = environment.wsUrl;
 
 @Component({
   selector: 'app-update-product',
@@ -87,7 +90,7 @@ export class UpdateProductComponent implements OnInit {
             price: +document.getElementById('price')['value'],
             stock: +document.getElementById('stock')['value'],
             categoryId: +document.getElementById('categoryId')['value'],
-            image: 'http://localhost:8000/' + data.filepath,
+            image: `${URL}/` + data.filepath,
           };
 
           this.updateProductObserver$ = this.productService.updateProduct(this.id, body);

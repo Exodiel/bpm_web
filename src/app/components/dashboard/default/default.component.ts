@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../shared/services/user.service';
 import * as chartData from '../../../shared/data/dashboard/default'
 import { UserResponse } from '../../../shared/interfaces/user/user-response';
+import { DashboardService } from '../../../shared/services/dashboard.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { ValuesByYear } from '../../../shared/interfaces/dashboard/dashboard-reponse';
 
 @Component({
   selector: 'app-default',
@@ -25,10 +29,57 @@ export class DefaultComponent implements OnInit {
   public knob = chartData.knob;
   public knobRight = chartData.knobRight;
 
-  constructor(private userService: UserService) {
+  totalActualMonth: string;
+  totalPastMonth: string;
+  complete: string;
+  inventoried: string;
+  processing: string;
+  returning: string;
+
+  constructor(
+    private userService: UserService,
+    private dashboardService: DashboardService,
+    public toster: ToastrService,
+  ) {
   }
 
   ngOnInit() {
+    this.dashboardService.getTotalsMonth().subscribe(
+      (response) => {
+        this.totalActualMonth = Number(response.data.actualMonth.total).toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        this.totalPastMonth = Number(response.data.pastMonth.total).toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      },
+      (httpError: HttpErrorResponse) => {
+        this.toster.error(httpError.message);
+      }
+    );
+    this.dashboardService.getTotalsByYears().subscribe(
+      (response) => {
+        let actual = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        let past = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        response.data.actualYear.forEach((value) => {
+          this.fillValues(value, actual);
+        });
+        response.data.pastYear.forEach((value) => {
+          this.fillValues(value, past);
+        });
+        this.currentSales = chartData.CurrentSales(actual, past);
+      },
+      (httpError: HttpErrorResponse) => {
+        this.toster.error(httpError.message);
+      }
+    );
+    this.dashboardService.getCountersByState().subscribe(
+      (response) => {
+        this.complete =  response.data.complete;
+        this.inventoried =  response.data.inventoried;
+        this.processing =  response.data.processing;
+        this.returning =  response.data.returning;
+      },
+      (httpError: HttpErrorResponse) => {
+        this.toster.error(httpError.message);
+      }
+    );
     this.userService.getLoggedUser().subscribe(
       (data) => {
         this.user = data;
@@ -44,8 +95,6 @@ export class DefaultComponent implements OnInit {
       this.greeting = 'Buenas noches'
     }
     this.startTime();
-    document.getElementById('knob').append(this.knob);
-    document.getElementById('knob-right').append(this.knobRight);
   }
 
   startTime() {
@@ -58,5 +107,33 @@ export class DefaultComponent implements OnInit {
   checkTime(i) {
     if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
     return i;
+  }
+
+  fillValues(value: ValuesByYear, values: number[]) {
+    if (value.month === 1) {
+      values[0] = parseFloat(value.total);
+    } else if (value.month === 2) {
+        values[1] = parseFloat(value.total);
+    } else if (value.month === 3) {
+        values[2] = parseFloat(value.total);
+    } else if (value.month === 4) {
+        values[3] = parseFloat(value.total);
+    } else if (value.month === 5) {
+        values[4] = parseFloat(value.total);
+    } else if (value.month === 6) {
+        values[5] = parseFloat(value.total);
+    } else if (value.month === 7) {
+        values[6] = parseFloat(value.total);
+    } else if (value.month === 8) {
+        values[7] = parseFloat(value.total);
+    } else if (value.month === 9) {
+        values[8] = parseFloat(value.total);
+    } else if (value.month === 10) {
+        values[9] = parseFloat(value.total);
+    } else if (value.month === 11) {
+        values[10] = parseFloat(value.total);
+    } else {
+        values[11] = parseFloat(value.total);
+    }
   }
 }

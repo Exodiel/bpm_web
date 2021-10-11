@@ -8,6 +8,7 @@ import { Pagination } from '../../../shared/interfaces/pagination.interface';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { ReportsExcelService } from '../../../shared/services/reports-excel.service';
 declare var require
 const Swal = require('sweetalert2')
 
@@ -23,6 +24,7 @@ export class ListClientComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     public toster: ToastrService,
+    private reportService: ReportsExcelService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -36,7 +38,7 @@ export class ListClientComponent implements OnInit {
     this.page.pageNumber = pageInfo.offset;
     this.userService.getUsers(this.page.size, (pageInfo.offset * this.page.size), 'client').subscribe(response => {
       let pageData = this.getPageData(this.page, response.data, response.total);
-      
+
       this.page = pageData.page;
       if (reload) {
         this.rows = [...pageData.data];
@@ -55,11 +57,11 @@ export class ListClientComponent implements OnInit {
     for (let i = 0; i < data.length; i++) {
       const jsonObj = data[i];
       const user = new UserMapped(
-        jsonObj.name, 
-        jsonObj.email, 
-        jsonObj.rol, 
-        jsonObj.identification, 
-        jsonObj.image, 
+        jsonObj.name,
+        jsonObj.email,
+        jsonObj.rol,
+        jsonObj.identification,
+        jsonObj.image,
         jsonObj.id,
         jsonObj.username,
         jsonObj.identification_type,
@@ -105,6 +107,28 @@ export class ListClientComponent implements OnInit {
 
   editUser(value: UserMapped) {
     this.router.navigate(['update-client/:id', value.id]);
+  }
+
+  generateExcel() {
+    this.userService.getUserByType('client').subscribe(
+      (response) => {
+        this.reportService.downloadPeopleExcel(response, 'client');
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
+  }
+
+  generatePdf() {
+    this.userService.getUserByType('client').subscribe(
+      (response) => {
+        this.reportService.downloadPeoplePdf(response, 'client');
+      },
+      (error: HttpErrorResponse) => {
+        this.toster.error(error.message);
+      }
+    );
   }
 
 }

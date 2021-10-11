@@ -7,6 +7,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryService } from '../../../shared/services/category.service';
 import { CategoryResponse } from '../../../shared/interfaces/category/category-response';
 import { CategoryDTO } from '../../../shared/interfaces/category/category.dto';
+import { UploadsService } from '../../../shared/services/uploads.service';
+import { environment } from '../../../../environments/environment';
+
+const URL = environment.wsUrl;
 
 @Component({
   selector: 'app-create-category',
@@ -19,8 +23,10 @@ export class CreateCategoryComponent implements OnInit {
   public createCategoryForm: FormGroup;
   createCategoryObserver$: Observable<CategoryResponse>;
   createCategorySubscription: Subscription;
+  file: File = null;
   constructor(
     private categoryService: CategoryService,
+    private uploadService: UploadsService,
     public router: Router,
     public ngZone: NgZone,
     public toster: ToastrService,
@@ -33,21 +39,34 @@ export class CreateCategoryComponent implements OnInit {
     });
   }
 
+  onChange(event) {
+    this.file = (event.target as HTMLInputElement).files[0];
+  }
+
   public submit() {
     this.validate = !this.validate;
     if (this.validate) {
-      const data = <CategoryDTO>{
-        name: this.createCategoryForm.value['name']
-      };
-
-      this.createCategoryObserver$ = this.categoryService.createCategory(data);
-
-      this.createCategorySubscription = this.createCategoryObserver$.subscribe(
+      this.uploadService.uploadImage(this.file).subscribe(
         (data) => {
-          this.toster.success("Categoria creada correctamente");
-          this.ngZone.run(() => {
-            this.router.navigate(['/categories/list-category']);
-          });
+          
+          const body = <CategoryDTO>{
+            name: this.createCategoryForm.value['name'],
+            image: `${URL}/` + data.filepath,
+          };
+    
+          this.createCategoryObserver$ = this.categoryService.createCategory(body);
+    
+          this.createCategorySubscription = this.createCategoryObserver$.subscribe(
+            (data) => {
+              this.toster.success("Categoria creada correctamente");
+              this.ngZone.run(() => {
+                this.router.navigate(['/categories/list-category']);
+              });
+            },
+            (httpError: HttpErrorResponse) => {
+              this.toster.error(httpError.error['message']);
+            }
+          );
         },
         (httpError: HttpErrorResponse) => {
           this.toster.error(httpError.error['message']);

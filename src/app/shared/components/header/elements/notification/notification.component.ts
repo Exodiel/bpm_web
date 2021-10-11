@@ -2,8 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../../../services/notification.service';
 import { NotificationResponse } from '../../../../interfaces/notification/notification-response';
 import { HttpErrorResponse } from '@angular/common/http';
-import { format } from 'timeago.js';
-import { SocketService, IOEventName, INotificationMessage } from '../../../../services/socket.service';
+import { format, register } from 'timeago.js';
+import { SocketService, IOEventName } from '../../../../services/socket.service';
+
+register('es_ES', (number, index, total_sec) => [
+  ['justo ahora', 'ahora mismo'],
+  ['hace %s segundos', 'en %s segundos'],
+  ['hace 1 minuto', 'en 1 minuto'],
+  ['hace %s minutos', 'en %s minutos'],
+  ['hace 1 hora', 'en 1 hora'],
+  ['hace %s horas', 'in %s horas'],
+  ['hace 1 dia', 'en 1 dia'],
+  ['hace %s dias', 'en %s dias'],
+  ['hace 1 semana', 'en 1 semana'],
+  ['hace %s semanas', 'en %s semanas'],
+  ['1 mes', 'en 1 mes'],
+  ['hace %s meses', 'en %s meses'],
+  ['hace 1 año', 'en 1 año'],
+  ['hace %s años', 'en %s años']
+][index] as [string, string]);
+
+const timeago = timestamp => format(timestamp, 'es_ES');
 
 @Component({
   selector: 'app-notification',
@@ -26,11 +45,10 @@ export class NotificationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.socketService.onEvent<INotificationMessage>(IOEventName.NEW_NOTIFICATION).subscribe(
+    this.socketService.onEvent<NotificationResponse>(IOEventName.NEW_NOTIFICATION).subscribe(
       (message) => {
         this.notifications.pop();
-        const notification = this.parseNotification(message);
-        this.notifications.push(notification);
+        this.notifications.push(message);
         this.total++;
       }
     );
@@ -45,36 +63,8 @@ export class NotificationComponent implements OnInit {
     );
   }
 
-  parseNotification(message: INotificationMessage): NotificationResponse {
-    const { id, address, date, description, sequential, state, subtotal, discount, origin, payment, tax, total, type } = message.order;
-    return {
-      id: message.id,
-      topic: message.topic,
-      body: message.body,
-      created_at: message.created_at,
-      imageUrl: message.imageUrl,
-      title: message.title,
-      updated_at: message.updated_at,
-      order: {
-        id,
-        address,
-        date,
-        description,
-        sequential,
-        state,
-        subtotal,
-        discount,
-        origin,
-        payment,
-        tax,
-        total,
-        type,
-      }
-    };
-  }
-
   formatBody(date: string) {
-    return format(date, 'es');
+    return timeago(date);
   }
 
   toggleNotificationMobile() {

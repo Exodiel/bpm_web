@@ -5,11 +5,18 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
+
                     <h5>Lista de transacciones</h5>
                     <a class="btn btn-outline-info float-right" [routerLink]="['/orders/create-order']"><i
                             class="fa fa-plus"></i>
                         Nueva transacci&oacute;n
                     </a>
+                </div>
+                <div class="card-header">
+                    <div class="btn-group mt-2 float-right">
+                        <button class="btn btn-light mr-2" (click)="generateExcel();"><i class="fa fa-file-excel-o text-success"></i> Excel</button>
+                        <button class="btn btn-light" (click)="generatePdf();"><i class="fa fa-file-pdf-o text-danger"></i> Pdf</button>
+                      </div>
                 </div>
                 <div class="card-body custom-datatable">
                     <ngx-datatable class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"

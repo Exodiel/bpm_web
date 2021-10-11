@@ -7,6 +7,12 @@
                 <div class="card-header">
                     <h5>Lista de usuarios</h5>
                 </div>
+                <div class="card-header">
+                    <div class="btn-group mt-2 float-right">
+                        <button class="btn btn-light mr-2" (click)="generateExcel();"><i class="fa fa-file-excel-o text-success"></i> Excel</button>
+                        <button class="btn btn-light" (click)="generatePdf();"><i class="fa fa-file-pdf-o text-danger"></i> Pdf</button>
+                      </div>
+                </div>
                 <div class="card-body custom-datatable">
                     <ngx-datatable class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"
                         [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements"

@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
       },
       (httpError: HttpErrorResponse) => {
-        this.showLoader = true;
+        this.showLoader = false;
         this.errorMessage = httpError.error["message"];
 
         this.toster.error(this.errorMessage);

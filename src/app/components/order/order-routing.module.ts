@@ -15,19 +15,19 @@ const routes: Routes = [
             {
                 path: 'create-order',
                 component: CreateOrderComponent,
-                canActivate: [AdminGuard, SellerGuard],
+                canActivate: [AdminGuard],
             },
             {
                 path: 'list-order',
                 component: ListOrderComponent,
-                canActivate: [AdminGuard, SellerGuard, StorekeeperGuard, DispatcherGuard],
+                canActivate: [AdminGuard],
             },
             {
                 path: 'update-order/:id',
                 component: UpdateOrderComponent,
                 canActivate: [AdminGuard],
             }
-        ]   
+        ]
     }
 ];
 

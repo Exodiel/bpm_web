@@ -6,6 +6,7 @@ import { StorageService } from './storage.service';
 import { ProductResponse } from '../interfaces/product/product-response';
 import { ProductDTO } from '../interfaces/product/product.dto';
 import { ListResponse } from '../interfaces/list-response';
+import { ProductReportDto } from '../interfaces/reports/product-report.dto';
 
 const URL = environment.apiUrl;
 
@@ -64,6 +65,14 @@ export class ProductService {
 
   deleteProductById(id: number) {
     return this.httpClient.delete(`${URL}/product/delete/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${this.storageService.token}`
+      }
+    });
+  }
+
+  getProductReport(data: ProductReportDto) {
+    return this.httpClient.post(`${URL}/product/get-report-product`, { ...data }, {
       headers: {
         'Authorization': `Bearer ${this.storageService.token}`
       }

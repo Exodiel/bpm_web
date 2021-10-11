@@ -1,1 +1,55 @@
-<p>products works!</p>
+<app-breadcrumb [title]="'Productos'" [items]="['Reportes']" [active_item]="'Productos'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h5>B&uacute;squeda</h5>
+            </div>
+            <form [formGroup]="searchProductForm" novalidate [ngClass]="{'was-validated': validate}">
+              <div class="card-header">
+                <div class="btn-group float-right mt-2">
+                  <button class="btn btn-light mr-2" (click)="generateExcel();"><i class="fa fa-file-excel-o text-success"></i> Excel</button>
+                  <button class="btn btn-light" (click)="generatePdf();"><i class="fa fa-file-pdf-o text-danger"></i> Pdf</button>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="row mb-2">
+                  <div class="col-md-6">
+                    <label for="">Fecha inicio:</label>
+                    <input class="form-control" type="date" id="startDate" formControlName="startDate" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="tipo">Tipo reporte <span style="color: red;">(*)</span></label>
+                    <select class="form-control" id="tipo" formControlName="tipo" required="">
+                        <option value="" selected="selected">-- Seleccione --</option>
+                        <option value="profit-utility">Margen de utilidad</option>
+                        <option value="most-selling">Productos m&aacute;s vendidos</option>
+                    </select>
+                  </div>
+                  
+                  
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="">Fecha corte:</label>
+                    <input class="form-control" type="date" id="endDate" formControlName="endDate" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="categoryId">Categor&iacute;a</label>
+                    <select class="form-control" id="categoryId" formControlName="categoryId">
+                        <option value="" selected="selected">-- Seleccione --</option>
+                        <option *ngFor="let category of categories" value="{{category.id}}">
+                          {{category.name}}
+                        </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+      </div>
+  </div>
+</div>

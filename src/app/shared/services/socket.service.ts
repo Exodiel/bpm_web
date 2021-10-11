@@ -14,36 +14,6 @@ export enum IOEventName {
   START_CONNECTION = "connection",
 }
 
-export interface INotificationMessage {
-  id: number,
-  topic: string,
-  title: string,
-  body: string,
-  imageUrl: string,
-  data: string,
-  created_at: string,
-  updated_at: string,
-  order: IOrderMessage,
-}
-
-export interface IOrderMessage {
-  id: number,
-  sequential: string,
-  date: string,
-  discount: number,
-  subtotal: number,
-  tax: number,
-  total: number,
-  description: string,
-  type: string,
-  payment: string,
-  state: string,
-  address: string,
-  origin: string,
-  created_at: string,
-  updated_at: string,
-}
-
 @Injectable({
   providedIn: 'root'
 })

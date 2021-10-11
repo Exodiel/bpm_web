@@ -1,1 +1,64 @@
-<p>orders works!</p>
+<app-breadcrumb [title]="'Transacciones'" [items]="['Reportes']" [active_item]="'Transacciones'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h5>B&uacute;squeda</h5>
+            </div>
+            <form [formGroup]="searchOrderForm" novalidate [ngClass]="{'was-validated': validate}">
+              <div class="card-header">
+                <div class="btn-group float-right mt-2">
+                  <button class="btn btn-light mr-2" (click)="generateExcel();"><i class="fa fa-file-excel-o text-success"></i> Excel</button>
+                  <button class="btn btn-light" (click)="generatePdf();"><i class="fa fa-file-pdf-o text-danger"></i> Pdf</button>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="">Fecha inicio: <span style="color: red;">(*)</span></label>
+                    <input class="form-control" type="date" id="startDate" formControlName="startDate" required="" />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="personId">Persona</label>
+                    <select class="form-control" id="personId" formControlName="personId">
+                        <option value="" selected="selected">-- Seleccione --</option>
+                        <option *ngFor="let person of people" value="{{person.id}}">
+                            {{person.identification}} -- {{person.name}}
+                        </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="tipo">Tipo</label>
+                    <select class="form-control" id="tipo" formControlName="tipo">
+                        <option value="" selected="selected">-- Seleccione --</option>
+                        <option value="Venta">Venta</option>
+                        <option value="Compra">Compra</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="">Fecha corte: <span style="color: red;">(*)</span></label>
+                    <input class="form-control" type="date" id="endDate" formControlName="endDate" required="" />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="state">Estado</label>
+                    <select class="form-control" id="state" formControlName="state">
+                        <option value="" selected="selected">-- Seleccione --</option>
+                        <option value="creado">Creado</option>
+                        <option value="inventariado">Inventariado</option>
+                        <option value="procesando">En proceso</option>
+                        <option value="completado">Completado</option>
+                        <option value="devuelto">Devuelto</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+      </div>
+  </div>
+</div>

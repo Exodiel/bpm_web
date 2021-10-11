@@ -83,7 +83,7 @@ export class NavService implements OnDestroy {
 	}
 
 	private buildMenu() {
-		if (this.storageService.rol === 'admin') {
+		if (this.storageService.rol === 'admin' || this.storageService.rol === 'gerente') {
 			return [
 				{
 					title: 'Inicio',
@@ -98,7 +98,7 @@ export class NavService implements OnDestroy {
 					type: 'sub',
 					active: false,
 					children: [
-						{ path: '/orders/list-orders', title: 'Transaccion', type: 'link' },
+						{ path: '/orders/list-order', title: 'Transaccion', type: 'link' },
 						{
 							title: 'Personas',
 							type: 'sub',
@@ -136,9 +136,7 @@ export class NavService implements OnDestroy {
 					active: false,
 					children: [
 						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
-						{ path: '/reports/people', title: 'Personas', type: 'link' },
 						{ path: '/reports/products', title: 'Productos', type: 'link' },
-						{ path: '/reports/users', title: 'Usuarios', type: 'link' },
 					]
 				},
 			];
@@ -186,7 +184,6 @@ export class NavService implements OnDestroy {
 					active: false,
 					children: [
 						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
-						{ path: '/reports/people', title: 'Personas', type: 'link' },
 						{ path: '/reports/products', title: 'Productos', type: 'link' },
 					]
 				},
@@ -235,7 +232,6 @@ export class NavService implements OnDestroy {
 					active: false,
 					children: [
 						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
-						{ path: '/reports/people', title: 'Personas', type: 'link' },
 						{ path: '/reports/products', title: 'Productos', type: 'link' },
 					]
 				},
@@ -273,7 +269,6 @@ export class NavService implements OnDestroy {
 					type: 'sub',
 					active: false,
 					children: [
-						{ path: '/reports/orders', title: 'Transacciones', type: 'link' },
 						{ path: '/reports/products', title: 'Productos', type: 'link' },
 					]
 				},
